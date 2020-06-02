@@ -1,0 +1,99 @@
+<html>
+<style>
+    table,
+    td {
+        border: 1px solid black;
+        padding: 5px;
+    }
+</style>
+<title>Final test lab</title>
+
+<body onload="onCreate()">
+    <font size="8" color="green">Final test lab</font><br>
+    <div id="hide">
+        <br> Number of rows: <input type="text" id="t1" /><br>
+
+        <br> Number of cols: <input type="text" id="t2" /><br><br>
+
+        <button id="b1" onclick="generateTable()">Generate Table</button>
+    </div>
+    <br><br>
+    <div id="edit">
+        <button id="b2" onclick="addColumn()">Add Column</button>
+
+        <button id="b3" onclick="addRow()">Add Row</button>
+    </div>
+    <br><br>
+
+</body>
+<script language="javascript">
+    //Your code goes here
+
+    function onCreate() {
+        document.getElementById("edit").style.display = "none";
+    }
+
+    function generateTable() {
+        var r = document.getElementById("t1").value;
+        var c = document.getElementById("t2").value;
+        if (isNaN(r) || isNaN(c) || r === "" || c === "") {
+            alert("The inputs must be a number");
+        } else {
+            var x = document.createElement("TABLE");
+            x.setAttribute("id", "mytable");
+            var tblBody = document.createElement("tbody");
+            document.body.appendChild(x);
+            var i
+            var j
+            for (let i = 0; i < r; i++) {
+                var y = document.createElement("TR");
+                for (let j = 0; j < c; j++) {
+                    var z = document.createElement("TD");
+                    var t = document.createTextNode("cell " + i + "," + j + " ");
+                    z.appendChild(t);
+                    y.appendChild(z);
+                }
+                tblBody.appendChild(y);
+                x.appendChild(tblBody);
+
+                var t1 = document.getElementById("hide");
+                t1.style.display = "none";
+                document.getElementById("edit").style.display = "block";
+            }
+
+        }
+    }
+
+    function addColumn() {
+        var x = document.getElementById("mytable"),
+            i;
+        var cl = x.rows[0].cells.length - 1;
+
+        for (i = 0; i < x.rows.length; i++) {
+            var txts = "new col " + i + "," + cl;
+            createCell(x.rows[i].insertCell(x.rows[i].cells.length), txts, 'col');
+        }
+
+    }
+
+    function addRow() {
+        var x = document.getElementById('mytable'),
+            row = x.insertRow(x.rows.length),
+            i;
+        var rw = x.rows.length - 1;
+        for (i = 0; i < x.rows[0].cells.length; i++) {
+            var txts = "new row " + rw + "," + i;
+            createCell(row.insertCell(i), txts, 'row');
+        }
+    }
+
+    function createCell(cell, text, style) {
+        var div = document.createElement('TD'),
+            txt = document.createTextNode(text);
+        div.appendChild(txt);
+        div.setAttribute("style", "background-color: gray;");
+        cell.appendChild(div);
+    }
+</script>
+
+</html>
